@@ -3,18 +3,18 @@ package by.bogdanovich.model;
 import java.sql.Date;
 
 public class Employee {
-	private Department department;
+	private Integer departmentID;
 	private String firstName;
 	private String middleName;
 	private String lastName;
 	private Date birthDate;
 
-	public Department getDepartment() {
-		return department;
+	public Integer getDepartmentID() {
+		return departmentID;
 	}
 
-	public void setDepartment(Department department) {
-		this.department = department;
+	public void setDepartmentID(Integer departmentID) {
+		this.departmentID = departmentID;
 	}
 
 	public String getFirstName() {
@@ -49,24 +49,14 @@ public class Employee {
 		this.birthDate = birthDate;
 	}
 
-	/**
-	 * @param department
-	 * @param firstName
-	 * @param middleName
-	 * @param lastName
-	 * @param birthDate
-	 */
-	public Employee(Department department, String firstName, String middleName, String lastName, Date birthDate) {
-		this.department = department;
+	public Employee(Integer departmentID, String firstName, String middleName, String lastName, Date birthDate) {
+		this.departmentID = departmentID;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
 		this.birthDate = birthDate;
 	}
 
-	/**
-	 * 
-	 */
 	public Employee() {
 
 	}
