@@ -20,7 +20,7 @@ public class Config {
 		return new AutowiredAnnotationBeanPostProcessor();
 	}
 
-	@Bean
+	@Bean(name="dataSource")
 	public DriverManagerDataSource dataSource() throws FileNotFoundException, IOException {
 		DriverManagerDataSource ds = new DriverManagerDataSource();
 		Properties connectionProperties = new Properties();
