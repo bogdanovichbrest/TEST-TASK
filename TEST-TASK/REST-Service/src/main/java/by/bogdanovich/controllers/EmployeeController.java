@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import by.bogdanovich.dao.AppDAO;
 import by.bogdanovich.model.Employee;
 
-@RestController("/")
+@RestController("/employee")
 @RequestMapping("/")
 public class EmployeeController {
 	@Autowired
