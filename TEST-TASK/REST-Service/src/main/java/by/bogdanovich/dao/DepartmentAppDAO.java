@@ -21,27 +21,28 @@ public class DepartmentAppDAO implements AppDAO {
 	@Autowired
 	@Qualifier(value = "dataSource")
 	private DriverManagerDataSource datasource;
-	private JdbcTemplate template = new JdbcTemplate(datasource);
+	private JdbcTemplate template;
 
 	@PostConstruct
 	public void init() {
+		template = new JdbcTemplate(datasource);
 
 	}
 
 	public List<Employee> getAllEmployees() {
-		return template.query("SELECT * FROM EMPLOYEES", employeeMapper);
+		return template.query("SELECT * FROM EMPLOYEES JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENTID = DEPARTMENTS.DEPARTMENTID", employeeMapper);
 	}
 
 	public List<Employee> getAllEmployeesInDepartment(Integer departmentID) {
-		return template.query("SELECT * FROM EMPLOYEES WHERE DEPARTMENTID = " + departmentID, employeeMapper);
+		return template.query("SELECT * FROM EMPLOYEES  JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENTID = DEPARTMENTS.DEPARTMENTID  WHERE EMPLOYEES.DEPARTMENTID = " + departmentID, employeeMapper);
 	}
 
 	public List<Employee> getAllEmployeesByDate(Date date) {
-		return template.query("SELECT * FROM EMPLOYEES WHERE DATE = " + date, employeeMapper);
+		return template.query("SELECT * FROM EMPLOYEES  JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENTID = DEPARTMENTS.DEPARTMENTID  WHERE EMPLOYEES.BIRTHDATE = '" + date + "'", employeeMapper);
 	}
 
 	public List<Employee> getAllEmployeesBetwenDates(Date date1, Date date2) {
-		return template.query("SELECT * FROM EMPLOYEES WHERE BIRTHDATE BETWEEN " + date1 + " AND " + date2,
+		return template.query("SELECT * FROM EMPLOYEES  JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENTID = DEPARTMENTS.DEPARTMENTID  WHERE EMPLOYEES.BIRTHDATE BETWEEN '" + date1 + "' AND '" + date2 + "'",
 				employeeMapper);
 	}
 
@@ -53,10 +54,10 @@ public class DepartmentAppDAO implements AppDAO {
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO EMPLOYEES VALUES(");
 		sb.append(employee.getId() + ", ");
-		sb.append(employee.getDepartmentID() + ", ");
+		sb.append(employee.getDepartment().getDepartmentID() + ", ");
 		sb.append(employee.getSalary() + ", '");
 		sb.append(employee.getFirstName() + "', '");
-		sb.append(employee.getMiddleName() + "', '");
+		sb.append(employee.getPatronymic() + "', '");
 		sb.append(employee.getLastName() + "', ");
 		sb.append(employee.getBirthDate());
 
@@ -67,10 +68,10 @@ public class DepartmentAppDAO implements AppDAO {
 	public void updateEmployee(Employee employee) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("UPDATE EMPLOYEES SET DEPARTMENTID = ");
-		sb.append(employee.getDepartmentID() + ", SALARY = ");
+		sb.append(employee.getDepartment().getDepartmentID() + ", SALARY = ");
 		sb.append(employee.getSalary() + ", FIRSTMAME = '");
-		sb.append(employee.getFirstName() + "', MIDDLENAME = '");
-		sb.append(employee.getMiddleName() + "', LASTNAME = '");
+		sb.append(employee.getFirstName() + "', PATRONYMIC = '");
+		sb.append(employee.getPatronymic() + "', LASTNAME = '");
 		sb.append(employee.getLastName() + "', BIRTHDATE = ");
 		sb.append(employee.getBirthDate());
 		sb.append("WHERE ID = " + employee.getId());
@@ -107,10 +108,10 @@ public class DepartmentAppDAO implements AppDAO {
 		public Employee mapRow(ResultSet rs, int numRow) throws SQLException {
 			Employee employee = new Employee();
 			employee.setId(rs.findColumn("ID"));
-			employee.setDepartmentID(rs.getInt("DEPARTMENTID"));
+			employee.setDepartment(new Department(rs.getInt("DEPARTMENTS.DEPARTMENTID"),rs.getString("DEPARTMENTS.DEPARTMENTNAME")));
 			employee.setSalary(rs.getInt("SALARY"));
 			employee.setFirstName(rs.getString("FIRSTNAME"));
-			employee.setMiddleName(rs.getString("MIDDLENAME"));
+			employee.setPatronymic(rs.getString("PATRONYMIC"));
 			employee.setLastName(rs.getString("LASTNAME"));
 			employee.setBirthDate(rs.getDate("BIRTHDATE"));
 

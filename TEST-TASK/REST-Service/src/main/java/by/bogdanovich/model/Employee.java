@@ -4,10 +4,10 @@ import java.sql.Date;
 
 public class Employee {
 	private Integer id;
-	private Integer departmentID;
+	private Department department;
 	private Integer salary;
 	private String firstName;
-	private String middleName;
+	private String patronymic;
 	private String lastName;
 	private Date birthDate;
 
@@ -19,12 +19,12 @@ public class Employee {
 		this.id = id;
 	}
 
-	public Integer getDepartmentID() {
-		return departmentID;
+	public Department getDepartment() {
+		return department;
 	}
 
-	public void setDepartmentID(Integer departmentID) {
-		this.departmentID = departmentID;
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
 	public Integer getSalary() {
@@ -43,12 +43,12 @@ public class Employee {
 		this.firstName = firstName;
 	}
 
-	public String getMiddleName() {
-		return middleName;
+	public String getPatronymic() {
+		return patronymic;
 	}
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+	public void setPatronymic(String patronymic) {
+		this.patronymic = patronymic;
 	}
 
 	public String getLastName() {
@@ -73,20 +73,20 @@ public class Employee {
 
 	/**
 	 * @param id
-	 * @param departmentID
+	 * @param department
 	 * @param salary
 	 * @param firstName
-	 * @param middleName
+	 * @param patronymic
 	 * @param lastName
 	 * @param birthDate
 	 */
-	public Employee(Integer id, Integer departmentID, Integer salary, String firstName, String middleName,
+	public Employee(Integer id, Department department, Integer salary, String firstName, String patronymic,
 			String lastName, Date birthDate) {
 		this.id = id;
-		this.departmentID = departmentID;
+		this.department = department;
 		this.salary = salary;
 		this.firstName = firstName;
-		this.middleName = middleName;
+		this.patronymic = patronymic;
 		this.lastName = lastName;
 		this.birthDate = birthDate;
 	}
