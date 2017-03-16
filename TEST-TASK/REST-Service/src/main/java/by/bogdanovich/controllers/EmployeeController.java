@@ -27,14 +27,14 @@ public class EmployeeController {
 		
 	}
 	
-	@RequestMapping(value = "/employee/{departmentID}", method = RequestMethod.GET)
+	@RequestMapping(value = "/employee/departmentID/{departmentID}", method = RequestMethod.GET)
 	public List<Employee> getAllEmployeesInDepartment(@PathVariable Integer departmentID)
 	{
 		return dao.getAllEmployeesInDepartment(departmentID);
 		
 	}
 	
-	@RequestMapping(value = "/employee/{birthDate}", method = RequestMethod.GET)
+	@RequestMapping(value = "/employee/birthDate/{birthDate}", method = RequestMethod.GET)
 	public List<Employee> getAllEgetAllEmployeesByDate(@PathVariable Date birthDate)
 	{
 		return dao.getAllEmployeesByDate(birthDate);
