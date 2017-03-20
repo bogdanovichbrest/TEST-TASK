@@ -56,7 +56,7 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value = "employee/update", method = RequestMethod.PUT)
-	public void updateEmployee(Employee employee)
+	public void updateEmployee(@RequestBody Employee employee)
 	{
 		dao.updateEmployee(employee);
 	}
