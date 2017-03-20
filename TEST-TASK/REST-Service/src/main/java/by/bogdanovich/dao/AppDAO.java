@@ -28,4 +28,8 @@ public interface AppDAO {
 	public void updateDepartment(Department department);
 
 	public void deleteDepartment(Department department);
+	
+	public Employee findEmployeeById(Integer id);
+
+	public Department findDepartmentById(Integer departmentId);
 }

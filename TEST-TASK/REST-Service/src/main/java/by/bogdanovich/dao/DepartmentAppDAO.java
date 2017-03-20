@@ -30,20 +30,27 @@ public class DepartmentAppDAO implements AppDAO {
 	}
 
 	public List<Employee> getAllEmployees() {
-		return template.query("SELECT * FROM EMPLOYEES JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENTID = DEPARTMENTS.DEPARTMENTID", employeeMapper);
+		return template.query(
+				"SELECT * FROM EMPLOYEES JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENTID = DEPARTMENTS.DEPARTMENTID",
+				employeeMapper);
 	}
 
 	public List<Employee> getAllEmployeesInDepartment(Integer departmentID) {
-		return template.query("SELECT * FROM EMPLOYEES  JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENTID = DEPARTMENTS.DEPARTMENTID  WHERE EMPLOYEES.DEPARTMENTID = " + departmentID, employeeMapper);
+		return template
+				.query("SELECT * FROM EMPLOYEES  JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENTID = DEPARTMENTS.DEPARTMENTID  WHERE EMPLOYEES.DEPARTMENTID = "
+						+ departmentID, employeeMapper);
 	}
 
 	public List<Employee> getAllEmployeesByDate(Date date) {
-		return template.query("SELECT * FROM EMPLOYEES  JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENTID = DEPARTMENTS.DEPARTMENTID  WHERE EMPLOYEES.BIRTHDATE = '" + date + "'", employeeMapper);
+		return template
+				.query("SELECT * FROM EMPLOYEES  JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENTID = DEPARTMENTS.DEPARTMENTID  WHERE EMPLOYEES.BIRTHDATE = '"
+						+ date + "'", employeeMapper);
 	}
 
 	public List<Employee> getAllEmployeesBetwenDates(Date date1, Date date2) {
-		return template.query("SELECT * FROM EMPLOYEES  JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENTID = DEPARTMENTS.DEPARTMENTID  WHERE EMPLOYEES.BIRTHDATE BETWEEN '" + date1 + "' AND '" + date2 + "'",
-				employeeMapper);
+		return template
+				.query("SELECT * FROM EMPLOYEES  JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENTID = DEPARTMENTS.DEPARTMENTID  WHERE EMPLOYEES.BIRTHDATE BETWEEN '"
+						+ date1 + "' AND '" + date2 + "'", employeeMapper);
 	}
 
 	public List<Department> getAllDepartments() {
@@ -103,12 +110,22 @@ public class DepartmentAppDAO implements AppDAO {
 		template.execute("DELETE FROM DEPARTMENTS WHERE DEPARTMENTID = " + department.getDepartmentID());
 	}
 
+	public Employee findEmployeeById(Integer id) {
+		return template.query("SELECT * FROM EMPLOYEES WHERE ID = " + id, employeeMapper).get(0);
+	}
+
+	public Department findDepartmentById(Integer departmentId) {
+		return template.query("SELECT * FROM DEPARTMENTS WHERE DEPARTMENTID = " + departmentId, departmentMapper)
+				.get(0);
+	}
+
 	private RowMapper<Employee> employeeMapper = new RowMapper<Employee>() {
 
 		public Employee mapRow(ResultSet rs, int numRow) throws SQLException {
 			Employee employee = new Employee();
 			employee.setId(rs.findColumn("ID"));
-			employee.setDepartment(new Department(rs.getInt("DEPARTMENTS.DEPARTMENTID"),rs.getString("DEPARTMENTS.DEPARTMENTNAME")));
+			employee.setDepartment(
+					new Department(rs.getInt("DEPARTMENTS.DEPARTMENTID"), rs.getString("DEPARTMENTS.DEPARTMENTNAME")));
 			employee.setSalary(rs.getInt("SALARY"));
 			employee.setFirstName(rs.getString("FIRSTNAME"));
 			employee.setPatronymic(rs.getString("PATRONYMIC"));
