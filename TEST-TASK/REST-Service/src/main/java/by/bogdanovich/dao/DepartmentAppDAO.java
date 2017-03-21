@@ -123,7 +123,7 @@ public class DepartmentAppDAO implements AppDAO {
 
 		public Employee mapRow(ResultSet rs, int numRow) throws SQLException {
 			Employee employee = new Employee();
-			employee.setId(rs.findColumn("ID"));
+			employee.setId(rs.getInt("ID"));
 			employee.setDepartment(
 					new Department(rs.getInt("DEPARTMENTS.DEPARTMENTID"), rs.getString("DEPARTMENTS.DEPARTMENTNAME")));
 			employee.setSalary(rs.getInt("SALARY"));
