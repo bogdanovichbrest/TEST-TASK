@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import by.bogdanovich.dao.AppDAO;
@@ -62,9 +61,9 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value = "employee/delete/{id}", method = RequestMethod.DELETE)
-	public void deleteEmployee(@RequestParam Integer id)
+	public void deleteEmployee(@PathVariable Integer id)
 	{
-	dao.deleteEmployee(dao.findEmployeeById(id));	
+	dao.deleteEmployee(id);	
 	}
 	
 	public EmployeeController() {

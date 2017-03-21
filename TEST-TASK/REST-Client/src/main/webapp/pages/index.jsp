@@ -8,7 +8,7 @@
 <title>Department App</title>
 </head>
 <body>
-	<table border="2">
+	<table border="2" align="center">
 		<tr>
 			<th>ID</th>
 			<th>Firstname</th>
@@ -20,17 +20,31 @@
 			<th><div>Actions</div></th>
 		</tr>
 		<c:forEach var="employee" items="${Employees}">
-		<tr>
-		<td>${employee.id}</td>
-		<td>${employee.firstName}</td>
-		<td>${employee.patronymic}</td>
-		<td>${employee.lastName}</td>
-		<td>${employee.birthDate}</td>
-		<td>${employee.department.departmentName}</td>
-		<td>${employee.salary}</td>
-		<td><div>${employee.id}</div></td>
-		</tr>
+			<tr>
+				<td>${employee.id}</td>
+				<td>${employee.firstName}</td>
+				<td>${employee.patronymic}</td>
+				<td>${employee.lastName}</td>
+				<td>${employee.birthDate}</td>
+				<td><a href = "employee/department/${employee.department.departmentID}">${employee.department.departmentName}</a></td>
+				<td>${employee.salary}</td>
+				<td>
+					<div>
+						<a
+							href="employee/edit?id=${employee.id}&firstname=${employee.firstName}&patronymic=${employee.patronymic}&lastname=${employee.lastName}&birthdate=${employee.birthDate}&departmentid=${employee.department.departmentID}&departmentname=${employee.department.departmentName}&salary=${employee.salary}"><img
+							alt="Edit" src="pages/images/edit_icon_15.png" border="0"></a>
+						<a href="employee/delete?id=${employee.id}"><img alt="Delete"
+							src="pages/images/delete_icon_15.png" border="0"></a>
+					</div>
+				</td>
+			</tr>
 		</c:forEach>
 	</table>
+	<div align="center">
+		<p>
+			Add new Employee <a href="employee/edit"><img alt="add"
+				src="pages/images/add_icon_15.png" border="0"></a>
+		</p>
+	</div>
 </body>
 </html>

@@ -58,36 +58,39 @@ public class DepartmentAppDAO implements AppDAO {
 	}
 
 	public void addEmployee(Employee employee) {
+		employee.setDepartment(findDepartmentById(employee.getDepartment().getDepartmentID()));
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO EMPLOYEES VALUES(");
-		sb.append(employee.getId() + ", ");
-		sb.append(employee.getDepartment().getDepartmentID() + ", ");
-		sb.append(employee.getSalary() + ", '");
-		sb.append(employee.getFirstName() + "', '");
+		sb.append(employee.getId() + ", '");
+		sb.append(employee.getFirstName() + "' ,'");
 		sb.append(employee.getPatronymic() + "', '");
 		sb.append(employee.getLastName() + "', ");
-		sb.append(employee.getBirthDate());
+		sb.append(employee.getSalary() + ", '");
+		sb.append(employee.getBirthDate() + "', ");
+		sb.append(employee.getDepartment().getDepartmentID() + ")");
+		
 
 		template.execute(sb.toString());
 
 	}
 
 	public void updateEmployee(Employee employee) {
+		employee.setDepartment(findDepartmentById(employee.getDepartment().getDepartmentID()));
 		StringBuilder sb = new StringBuilder();
 		sb.append("UPDATE EMPLOYEES SET DEPARTMENTID = ");
 		sb.append(employee.getDepartment().getDepartmentID() + ", SALARY = ");
-		sb.append(employee.getSalary() + ", FIRSTMAME = '");
+		sb.append(employee.getSalary() + ", FIRSTNAME = '");
 		sb.append(employee.getFirstName() + "', PATRONYMIC = '");
 		sb.append(employee.getPatronymic() + "', LASTNAME = '");
-		sb.append(employee.getLastName() + "', BIRTHDATE = ");
+		sb.append(employee.getLastName() + "', BIRTHDATE = '");
 		sb.append(employee.getBirthDate());
-		sb.append("WHERE ID = " + employee.getId());
+		sb.append("' WHERE ID = " + employee.getId());
 
 		template.update(sb.toString());
 	}
 
-	public void deleteEmployee(Employee employee) {
-		template.execute("DELETE FROM EMPLOYEES WHERE ID = " + employee.getId());
+	public void deleteEmployee(Integer id) {
+		template.execute("DELETE FROM EMPLOYEES WHERE ID = " + id);
 	}
 
 	public void addDepartment(Department department) {

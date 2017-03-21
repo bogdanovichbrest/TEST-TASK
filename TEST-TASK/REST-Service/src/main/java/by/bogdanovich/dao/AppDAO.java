@@ -21,7 +21,7 @@ public interface AppDAO {
 
 	public void updateEmployee(Employee employee);
 
-	public void deleteEmployee(Employee employee);
+	public void deleteEmployee(Integer id);
 
 	public void addDepartment(Department department);
 
