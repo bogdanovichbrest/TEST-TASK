@@ -2,10 +2,10 @@ package by.bogdanovich.controller;
 
 import java.sql.Date;
 
-import javax.servlet.http.HttpServletRequest;import org.springframework.beans.factory.support.GenericTypeAwareAutowireCandidateResolver;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
@@ -13,20 +13,36 @@ import org.springframework.web.client.RestTemplate;
 import by.bogdanovich.model.Department;
 import by.bogdanovich.model.Employee;
 
-@Controller("/")
+@Controller
 @RequestMapping("/")
 public class EmployeeController {
 	private RestTemplate template = new RestTemplate();
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String getAllEmployees(ModelMap model)
+	public String getAllEmployees(ModelMap model, HttpServletRequest request)
 	{
+		if(request.getParameter("department")==null)
+		{
 		Employee employees[] = template.getForObject("http://localhost:8080/REST-Service/employee", Employee[].class);
 		model.addAttribute("Employees", employees);
+		}
+		else
+		{
+			//model.clear();
+			Employee employees[] = template.getForObject("http://localhost:8080/REST-Service/employee/departmentID/" + request.getParameter("department"), Employee[].class);
+			model.addAttribute("Employees", employees);
+			double middleSalary = 0;
+			for(int i = 0; i < employees.length; i++)
+			{
+				middleSalary = middleSalary + employees[i].getSalary();
+			}
+			middleSalary = middleSalary/employees.length;
+			model.addAttribute("MiddleSalary", "<div align=\"center\"><p>Middle salary: "+middleSalary+"</p></div>");
+		}
 		return "index";
 	}
 	
-	@RequestMapping("employee/edit")
+	@RequestMapping("/edit")
 	public String editEmployee(HttpServletRequest request, ModelMap model)
 	{
 		if(request.getParameter("id")!=null)
@@ -47,7 +63,7 @@ public class EmployeeController {
 		return "edit";
 	}
 	
-	@RequestMapping("employee/save")
+	@RequestMapping("/save")
 	public String saveEmployee(HttpServletRequest request)
 	{
 		Employee employee = new Employee();
@@ -66,24 +82,33 @@ public class EmployeeController {
 		{
 			template.postForObject("http://localhost:8080/REST-Service/employee/add", employee, Employee.class);
 		}
-		return "redirect: ../";
+		return "redirect:/";
 	}
 	
-	@RequestMapping("employee/delete")
+	@RequestMapping("/delete")
 	public String deleteEmployee(HttpServletRequest request)
 	{
 		template.delete("http://localhost:8080/REST-Service/employee/delete/" + request.getParameter("id"));
-		return "redirect: ../";
+		return "redirect:/";
 	}
 	
-	@RequestMapping("employee/department/{departmentID}")
-	public String getAllEmployeesInDepartment(@PathVariable Integer departmentID, ModelMap model)
+	@RequestMapping("/find")
+	public String findEmployees(HttpServletRequest request, ModelMap model)
 	{
-		Employee employees[] = template.getForObject("http://localhost:8080/REST-Service/employee/departmentID/" + departmentID, Employee[].class);
-		model.addAttribute("Employees", employees);
-		return "index";
-		
+		Employee employees[];
+		if(request.getParameter("date2")!="")
+		{
+			employees = template.getForObject("http://localhost:8080/REST-Service/employee/betweenDates/"+request.getParameter("date")+"/"+request.getParameter("date2"), Employee[].class);
+			model.addAttribute("Employees", employees);
+		}
+		else
+		{
+			employees = template.getForObject("http://localhost:8080/REST-Service/employee/birthDate/"+request.getParameter("date"), Employee[].class);
+			model.addAttribute("Employees", employees);
+		}
+		return "redirect:/";
 	}
+	
 
 	public EmployeeController() {
 

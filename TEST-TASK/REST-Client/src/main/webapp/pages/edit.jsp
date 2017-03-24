@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Add/Edit employee</title>
 </head>
 <body>
 	<table border="2" align="center">
@@ -21,7 +21,7 @@
 		</tr>
 
 		<tr>
-			<form action="save">
+			<form action="save" method="post">
 				<td><input name="id" type="text" readonly="readonly" size="4"
 					value="${employee.id}"></td>
 				<td><input name="firstname" type="text" size="15"
@@ -44,7 +44,7 @@
 					<div>
 
 						<input type="image" alt="Save"
-							src="../pages/images/save_icon_15.png" border="0">
+							src="/pages/images/save_icon_15.png" border="0">
 					</div>
 				</td>
 			</form>

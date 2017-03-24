@@ -8,6 +8,32 @@
 <title>Department App</title>
 </head>
 <body>
+	<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+		// set the visibility of an object to visible  
+		function show(obj) {
+			var theObj = document.getElementById(obj).style;
+			theObj.display = "inline-block";
+		}
+
+		// set the visibility of an object to hidden  
+		function hide(obj) {
+			var theObj = document.getElementById(obj).style;
+			theObj.display = "none";
+		}
+	</script>
+	
+	<form action="find" method="post">
+	<div align = "center">
+		<span>Find employees: </span>
+		<p><input name="check" type="radio" onclick="hide('date2')">By date:      </p>
+		<p><input name="check" type="radio" onclick="show('date2')" checked>Between dates:</p>
+		<input id="date" name = "date" type="text" placeholder="yyyy-mm-dd"
+			pattern="\d{4}-\d{2}-\d{2}"> <input id="date2" name = "date2" type="text"
+			placeholder="yyyy-mm-dd" pattern="\d{4}-\d{2}-\d{2}"> <input
+			type="submit" value="Find">
+			</div>
+	</form>
+
 	<table border="2" align="center">
 		<tr>
 			<th>ID</th>
@@ -26,23 +52,24 @@
 				<td>${employee.patronymic}</td>
 				<td>${employee.lastName}</td>
 				<td>${employee.birthDate}</td>
-				<td><a href = "employee/department/${employee.department.departmentID}">${employee.department.departmentName}</a></td>
+				<td><a href="?department=${employee.department.departmentID}">${employee.department.departmentName}</a></td>
 				<td>${employee.salary}</td>
 				<td>
 					<div>
 						<a
-							href="employee/edit?id=${employee.id}&firstname=${employee.firstName}&patronymic=${employee.patronymic}&lastname=${employee.lastName}&birthdate=${employee.birthDate}&departmentid=${employee.department.departmentID}&departmentname=${employee.department.departmentName}&salary=${employee.salary}"><img
+							href="edit?id=${employee.id}&firstname=${employee.firstName}&patronymic=${employee.patronymic}&lastname=${employee.lastName}&birthdate=${employee.birthDate}&departmentid=${employee.department.departmentID}&departmentname=${employee.department.departmentName}&salary=${employee.salary}"><img
 							alt="Edit" src="pages/images/edit_icon_15.png" border="0"></a>
-						<a href="employee/delete?id=${employee.id}"><img alt="Delete"
+						<a href="delete?id=${employee.id}"><img alt="Delete"
 							src="pages/images/delete_icon_15.png" border="0"></a>
 					</div>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
+	${MiddleSalary}
 	<div align="center">
 		<p>
-			Add new Employee <a href="employee/edit"><img alt="add"
+			Add new Employee <a href="edit"><img alt="add"
 				src="pages/images/add_icon_15.png" border="0"></a>
 		</p>
 	</div>
