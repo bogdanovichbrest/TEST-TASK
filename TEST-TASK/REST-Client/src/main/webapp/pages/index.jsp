@@ -21,19 +21,28 @@
 			theObj.display = "none";
 		}
 	</script>
-	
-	<form action="find" method="post">
-	<div align = "center">
-		<span>Find employees: </span>
-		<p><input name="check" type="radio" onclick="hide('date2')">By date:      </p>
-		<p><input name="check" type="radio" onclick="show('date2')" checked>Between dates:</p>
-		<input id="date" name = "date" type="text" placeholder="yyyy-mm-dd"
-			pattern="\d{4}-\d{2}-\d{2}"> <input id="date2" name = "date2" type="text"
-			placeholder="yyyy-mm-dd" pattern="\d{4}-\d{2}-\d{2}"> <input
-			type="submit" value="Find">
-			</div>
-	</form>
 
+	<form action="find" method="post">
+		<div align="center">
+			<span>Find employees: </span>
+			<p>
+				<input name="check" type="radio" onclick="hide('date2')">By
+				date:
+			</p>
+			<p>
+				<input name="check" type="radio" onclick="show('date2')" checked>Between
+				dates:
+			</p>
+			<input id="date" name="date" type="text" placeholder="yyyy-mm-dd"
+				pattern="\d{4}-\d{2}-\d{2}"> <input id="date2" name="date2"
+				type="text" placeholder="yyyy-mm-dd" pattern="\d{4}-\d{2}-\d{2}">
+			<input type="submit" value="Find">
+		</div>
+	</form>
+	${BackToAllList}
+	<div align="center">
+		<a href="managedepartments">Manage Departments</a>
+	</div>
 	<table border="2" align="center">
 		<tr>
 			<th>ID</th>

@@ -90,5 +90,11 @@ public class Employee {
 		this.lastName = lastName;
 		this.birthDate = birthDate;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "ID = "+id+", Firstname = "+firstName+", Patronymic = "+patronymic+", Lastname = "+lastName+", birthDate = "+birthDate.toString()+", salary = "+salary+", department = departmentID="+department.getDepartmentID()+"; departmentName="+department.getDepartmentName();
+	}
 
 }
