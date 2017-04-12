@@ -56,7 +56,7 @@ public class Config {
 		Logger logger = Logger.getLogger("by.bogdanovich");
 		logger.setLevel(Level.DEBUG);
 		logger.addAppender(new ConsoleAppender(new PatternLayout("%d{yyyy-MM-dd HH:mm:ss} %-5p - %m%n")));
-		logger.addAppender(new DailyRollingFileAppender(new PatternLayout("%d{yyyy-MM-dd HH:mm:ss} %-5p - %m%n"), "${catalina.home}\\logs\\REST-Service.log", "%d{yyyy-MM-dd HH:mm:ss}"));
+		logger.addAppender(new DailyRollingFileAppender(new PatternLayout("%d{yyyy-MM-dd HH:mm:ss} %-5p - %m%n"), "logs\\REST-Service.log", "yyyy-MM-dd"));
 		return logger;
 	}
 

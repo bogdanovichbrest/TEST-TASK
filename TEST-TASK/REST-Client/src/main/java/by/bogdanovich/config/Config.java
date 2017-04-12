@@ -1,6 +1,9 @@
 package by.bogdanovich.config;
 
+import java.io.IOException;
+
 import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.DailyRollingFileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
@@ -35,11 +38,12 @@ public class Config extends WebMvcConfigurerAdapter{
 	}
 	
 	@Bean
-	public Logger appLogger()
+	public Logger appLogger() throws IOException
 	{
 		Logger logger = Logger.getLogger("by.bogdanovich");
 		logger.setLevel(Level.DEBUG);
 		logger.addAppender(new ConsoleAppender(new PatternLayout("%d{yyyy-MM-dd HH:mm:ss} %-5p - %m%n")));
+		logger.addAppender(new DailyRollingFileAppender(new PatternLayout("%d{yyyy-MM-dd HH:mm:ss} %-5p - %m%n"), "logs\\REST-Client.log", "yyyy-MM-dd"));
 		return logger;
 		
 	}
