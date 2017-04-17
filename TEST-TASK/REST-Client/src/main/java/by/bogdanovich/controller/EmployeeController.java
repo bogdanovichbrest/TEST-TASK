@@ -94,7 +94,7 @@ public class EmployeeController {
 	 */
 	@RequestMapping("/save")
 	public String saveEmployee(HttpServletRequest request) {
-		logger.debug(this.getClass().getName()+" GET request recieved to URL "+request.getRequestURI());
+		logger.debug(this.getClass().getName()+" POST request recieved to URL "+request.getRequestURI());
 		Employee employee = new Employee();
 		employee.setFirstName(request.getParameter("firstname"));
 		employee.setPatronymic(request.getParameter("patronymic"));

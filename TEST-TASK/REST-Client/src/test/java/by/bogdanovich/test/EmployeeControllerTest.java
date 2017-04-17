@@ -33,7 +33,20 @@ public class EmployeeControllerTest {
 	@Test
 	public void testGetAllEmployees() throws Exception
 	{
-		mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("index"));
+		mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("index")).andExpect(model().attributeExists("Employees"));
+		mockMvc.perform(get("/?department=0")).andExpect(status().isOk()).andExpect(view().name("index")).andExpect(model().attributeExists("Employees","MiddleSalary"));
+	}
+	
+	@Test
+	public void testEditEmployee() throws Exception
+	{
+		mockMvc.perform(get("/edit?id=0&firstname=Alexander&patronymic=Sergeevich&lastname=Bogdanovich&birthdate=1992-01-04&departmentid=0&departmentname=Software%20Engeneering&salary=1200")).andExpect(status().isOk()).andExpect(view().name("edit")).andExpect(model().attributeExists("employee","Departments"));
+	}
+	
+	@Test
+	public void testSaveEmployee()
+	{
+		mockMvc.perform(post("/save"))
 	}
 
 	public EmployeeControllerTest() {
