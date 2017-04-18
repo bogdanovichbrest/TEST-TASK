@@ -1,6 +1,6 @@
 package by.bogdanovich.test;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -44,9 +44,9 @@ public class EmployeeControllerTest {
 	}
 	
 	@Test
-	public void testSaveEmployee()
+	public void testSaveEmployee() throws Exception
 	{
-		mockMvc.perform(post("/save"))
+		mockMvc.perform(post("/save").param("id", "0").param("firstname", "Alexander").param("patronimyc", "Sergeevich").param("lastname", "Bogdanovich").param("birthdate", "1992-01-04").param("departmentid", "1").param("salary", "1200")).andExpect(redirectedUrl("/")).andExpect(status().isOk()).andExpect(view().name("index"));
 	}
 
 	public EmployeeControllerTest() {

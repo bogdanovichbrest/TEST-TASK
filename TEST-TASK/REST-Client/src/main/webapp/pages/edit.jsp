@@ -44,7 +44,7 @@
 					<div>
 
 						<input type="image" alt="Save"
-							src="/pages/images/save_icon_15.png" border="0">
+							src="pages/images/save_icon_15.png" border="0">
 					</div>
 				</td>
 			</form>
