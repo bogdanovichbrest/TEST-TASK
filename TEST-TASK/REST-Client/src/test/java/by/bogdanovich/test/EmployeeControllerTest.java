@@ -1,8 +1,14 @@
 package by.bogdanovich.test;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import by.bogdanovich.model.Employee;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes=TestConfig.class)
@@ -25,7 +33,7 @@ public class EmployeeControllerTest {
 	private MockMvc mockMvc;
 	
 	@Before
-	public void init()
+	public void init() throws Exception
 	{
 		mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
@@ -46,13 +54,23 @@ public class EmployeeControllerTest {
 	@Test
 	public void testSaveEmployee() throws Exception
 	{
-		mockMvc.perform(post("/save").param("id", "0").param("firstname", "Alexander").param("patronymic", "Sergeevich").param("lastname", "Bogdanovich").param("birthdate", "1992-01-04").param("departmentid", "1").param("salary", "1300")).andExpect(redirectedUrl("/")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/"));
+		mockMvc.perform(post("/save").param("id", "0").param("firstname", "Alexander").param("patronymic", "Sergeevich").param("lastname", "Bogdanovich").param("birthdate", "1992-01-04").param("departmentid", "1").param("salary", "1200")).andExpect(redirectedUrl("/")).andExpect(status().is3xxRedirection());
 	}
 	
 	@Test
-	public void testDeleteEmployee()
+	public void testDeleteEmployee() throws Exception
 	{
-		
+		mockMvc.perform(post("/save").param("id", "").param("firstname", "TEST").param("patronymic", "TEST").param("lastname", "TEST").param("birthdate", "1992-01-04").param("departmentid", "1").param("salary", "1200")).andExpect(redirectedUrl("/")).andExpect(status().is3xxRedirection());
+		Employee[] employees = (Employee[]) mockMvc.perform(get("/")).andReturn().getModelAndView().getModelMap().get("Employees");
+		mockMvc.perform(get("/delete?id="+employees[employees.length-1].getId())).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/"));
+
+	}
+	
+	@Test
+	public void testFindEmployees() throws Exception
+	{
+		mockMvc.perform(post("/find").param("check", "off").param("date", "1992-01-01").param("date2", "")).andExpect(status().isOk()).andExpect(model().attributeExists("BackToAllList","Employees"));	
+		mockMvc.perform(post("/find").param("check", "on").param("date", "1992-01-01").param("date2", "1994-04-01")).andExpect(status().isOk()).andExpect(model().attributeExists("BackToAllList","Employees"));
 	}
 
 	public EmployeeControllerTest() {
