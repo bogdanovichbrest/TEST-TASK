@@ -19,7 +19,7 @@
 			<form action="managedepartments/savedepartment" method="post">
 				<td><input name="departmentID" type="text" readonly="readonly" size="4"
 					value="${department.departmentID}"></td>
-				<td><input name="firstname" type="text" size="15"
+				<td><input name="departmentName" type="text" size="15"
 					value="${department.departmentName}" required></td>
 				<td>
 					<div>
