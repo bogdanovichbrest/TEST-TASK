@@ -7,9 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
