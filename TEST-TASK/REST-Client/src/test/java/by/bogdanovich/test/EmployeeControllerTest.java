@@ -46,7 +46,13 @@ public class EmployeeControllerTest {
 	@Test
 	public void testSaveEmployee() throws Exception
 	{
-		mockMvc.perform(post("/save").param("id", "0").param("firstname", "Alexander").param("patronimyc", "Sergeevich").param("lastname", "Bogdanovich").param("birthdate", "1992-01-04").param("departmentid", "1").param("salary", "1200")).andExpect(redirectedUrl("/")).andExpect(status().isOk()).andExpect(view().name("index"));
+		mockMvc.perform(post("/save").param("id", "0").param("firstname", "Alexander").param("patronymic", "Sergeevich").param("lastname", "Bogdanovich").param("birthdate", "1992-01-04").param("departmentid", "1").param("salary", "1300")).andExpect(redirectedUrl("/")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/"));
+	}
+	
+	@Test
+	public void testDeleteEmployee()
+	{
+		
 	}
 
 	public EmployeeControllerTest() {
