@@ -77,13 +77,13 @@ public class DepartmentController {
 	 * @param request
 	 * @return URL string
 	 */
-	@RequestMapping("managedepartment/savedepartment")
+	@RequestMapping("managedepartments/savedepartment")
 	public String saveDepartment(HttpServletRequest request)
 	{
 		logger.debug(this.getClass().getName()+" GET request recieved to URL "+request.getRequestURI());
 		Department department = new Department();
 		department.setDepartmentName(request.getParameter("departmentName"));
-		if(request.getParameter("departmentID")!=null)
+		if(request.getParameter("departmentID")!="")
 		{
 			department.setDepartmentID(Integer.parseInt(request.getParameter("departmentID")));
 			template.put("http://localhost:8080/REST-Service/department", department, Department.class);

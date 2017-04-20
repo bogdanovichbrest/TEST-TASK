@@ -16,7 +16,7 @@
 		</tr>
 
 		<tr>
-			<form action="managedepartments/savedepartment" method="post">
+			<form action="savedepartment" method="post">
 				<td><input name="departmentID" type="text" readonly="readonly" size="4"
 					value="${department.departmentID}"></td>
 				<td><input name="departmentName" type="text" size="15"
