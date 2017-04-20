@@ -44,13 +44,20 @@ public class DepartmentControllerTest {
 	@Test
 	public void testEditDepartment() throws Exception
 	{
-		mockMvc.perform(get("/managedepartments/editdepartment")).andExpect(status().isOk()).andExpect(view().name("editdepartment")).andExpect(model().attributeExists("department"));
+		mockMvc.perform(get("/managedepartments/editdepartment")).andExpect(status().isOk()).andExpect(view().name("editdepartment"));
 	}
 	
 	@Test
 	public void testSaveDepartment() throws Exception
 	{
-		mockMvc.perform(post("/managedepartments/savedepartment").param("departmentID", "0").param("departmentName", "Software Testing")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/managedepartments"));
+		mockMvc.perform(post("/managedepartments/savedepartment").param("departmentID", "").param("departmentName", "Software Testing")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/managedepartments"));
+	}
+	
+	@Test
+	public void testDeleteDepartment() throws Exception
+	{
+		Department departments[] = (Department[]) mockMvc.perform(get("/managedepartments")).andReturn().getModelAndView().getModel().get("Departments");
+		mockMvc.perform(get("/managedepartments/delete?departmentID="+departments[departments.length-1].getDepartmentID())).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/managedepartments"));
 	}
 
 	public DepartmentControllerTest() {
