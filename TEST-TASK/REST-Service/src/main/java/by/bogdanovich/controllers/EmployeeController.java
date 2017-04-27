@@ -65,7 +65,7 @@ public class EmployeeController {
 	 * @return List<Employee>
 	 */
 	@RequestMapping(value = "/employee/birthDate/{birthDate}", method = RequestMethod.GET)
-	public List<Employee> getAllEgetAllEmployeesByDate(@PathVariable Date birthDate, HttpServletRequest request)
+	public List<Employee> getAllEmployeesByDate(@PathVariable Date birthDate, HttpServletRequest request)
 	{
 		logger.debug(this.getClass().getName()+" GET request received to URL " + request.getRequestURI());
 		return dao.getAllEmployeesByDate(birthDate);
@@ -80,7 +80,7 @@ public class EmployeeController {
 	 * @return List<Employee>
 	 */
 	@RequestMapping(value = "/employee/betweenDates/{date1}/{date2}", method = RequestMethod.GET)
-	public List<Employee> getAllEgetAllBetweenDates(@PathVariable Date date1, @PathVariable Date date2, HttpServletRequest request)
+	public List<Employee> getAllBetweenDates(@PathVariable Date date1, @PathVariable Date date2, HttpServletRequest request)
 	{
 		logger.debug(this.getClass().getName()+" GET request received to URL " + request.getRequestURI());
 		return dao.getAllEmployeesBetwenDates(date1, date2);

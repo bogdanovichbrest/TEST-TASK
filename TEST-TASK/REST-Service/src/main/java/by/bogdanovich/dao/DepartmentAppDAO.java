@@ -34,6 +34,7 @@ public class DepartmentAppDAO implements AppDAO {
 	@PostConstruct
 	public void init() {
 		template = new JdbcTemplate(datasource);
+		template.execute("CREATE TABLE IF NOT EXISTS DEPARTMENTS(DEPARTMENTID INT NOT NULL, DEPARTMENTNAME VARCHAR(255))");
 
 	}
 
