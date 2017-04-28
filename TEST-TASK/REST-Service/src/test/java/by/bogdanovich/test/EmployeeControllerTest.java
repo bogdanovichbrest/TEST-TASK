@@ -108,6 +108,25 @@ public class EmployeeControllerTest {
 		assertEquals("Ivan", employees[0].getFirstName());
 		assertEquals("Alexander", employees[1].getFirstName());
 	}
+	
+	@Test
+	public void testUpdateEmployee() throws Exception
+	{
+		Employee employee =  mapper.readValue(mockMvc.perform(get("/employee")).andReturn().getResponse().getContentAsString(), Employee[].class)[0];
+		employee.setSalary(1200);
+		String json = mapper.writeValueAsString(employee);
+		mockMvc.perform(put("/employee/update").contentType(MediaType.APPLICATION_JSON_UTF8).content(json)).andExpect(status().isOk());
+		Employee empl[] = mapper.readValue(mockMvc.perform(get("/employee")).andReturn().getResponse().getContentAsString(), Employee[].class);
+		assertEquals("1200", empl[0].getSalary().toString());
+	}
+	
+	@Test
+	public void testDeleteEmployee() throws Exception
+	{
+		mockMvc.perform(delete("/employee/delete/2")).andExpect(status().isOk());
+		Employee employees[] = mapper.readValue(mockMvc.perform(get("/employee")).andReturn().getResponse().getContentAsString(), Employee[].class);
+		assertEquals(2, employees.length);
+	}
 
 	public EmployeeControllerTest() {
 		// TODO Auto-generated constructor stub
