@@ -34,7 +34,7 @@ import by.bogdanovich.model.Employee;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes=TestConfig.class)
-@FixMethodOrder(MethodSorters.JVM)
+//@FixMethodOrder(MethodSorters.JVM)
 public class EmployeeControllerTest {
 	@Autowired
 	private WebApplicationContext ctx;
@@ -57,6 +57,19 @@ public class EmployeeControllerTest {
 	}
 	
 	@Test
+	public void startTest() throws Exception
+	{
+		testAddEmployee();
+		testGetAllEmployees();
+		testGetAllEmployeesInDepartment();
+		testGetAllEmployeesByDate();
+		testGetAllBetweenDates();
+		testUpdateEmployee();
+		testDeleteEmployee();
+		
+	}
+	
+	
 	public void testAddEmployee() throws Exception
 	{
 		Employee employee = new Employee(null, new Department(0, "Software Testing"), 1000, "Vasilij", "Vasilievich", "Pupkin", Date.valueOf("1990-01-01"));
@@ -71,7 +84,7 @@ public class EmployeeControllerTest {
 		mockMvc.perform(post("/employee/add").contentType(MediaType.APPLICATION_JSON_UTF8).content(json)).andExpect(status().isOk());
 	}
 	
-	@Test
+	
 	public void testGetAllEmployees() throws Exception
 	{
 		mockMvc.perform(get("/employee")).andExpect(status().isOk());
@@ -82,7 +95,7 @@ public class EmployeeControllerTest {
 		assertEquals("Ivan", employee[2].getFirstName());
 	}
 	
-	@Test
+	
 	public void testGetAllEmployeesInDepartment() throws Exception
 	{
 		mockMvc.perform(get("/employee/departmentID/0")).andExpect(status().isOk());
@@ -92,7 +105,7 @@ public class EmployeeControllerTest {
 		assertEquals("Alexander", employee[1].getFirstName());
 	}
 	
-	@Test
+	
 	public void testGetAllEmployeesByDate() throws JsonParseException, JsonMappingException, UnsupportedEncodingException, IOException, Exception
 	{
 		Employee employees[] = mapper.readValue(mockMvc.perform(get("/employee/birthDate/1992-03-03")).andExpect(status().isOk()).andReturn().getResponse().getContentAsString(), Employee[].class);
@@ -100,7 +113,7 @@ public class EmployeeControllerTest {
 		assertEquals("Alexander", employees[0].getFirstName());
 	}
 	
-	@Test
+
 	public void testGetAllBetweenDates() throws JsonParseException, JsonMappingException, UnsupportedEncodingException, IOException, Exception
 	{
 		Employee employees[] = mapper.readValue(mockMvc.perform(get("/employee/betweenDates/1991-02-02/1992-03-03")).andExpect(status().isOk()).andReturn().getResponse().getContentAsString(), Employee[].class);
@@ -109,7 +122,7 @@ public class EmployeeControllerTest {
 		assertEquals("Alexander", employees[1].getFirstName());
 	}
 	
-	@Test
+
 	public void testUpdateEmployee() throws Exception
 	{
 		Employee employee =  mapper.readValue(mockMvc.perform(get("/employee")).andReturn().getResponse().getContentAsString(), Employee[].class)[0];
@@ -120,7 +133,7 @@ public class EmployeeControllerTest {
 		assertEquals("1200", empl[0].getSalary().toString());
 	}
 	
-	@Test
+
 	public void testDeleteEmployee() throws Exception
 	{
 		mockMvc.perform(delete("/employee/delete/2")).andExpect(status().isOk());
